@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Tony Tang 的数据与 SAP 自动化工具集。">
+    <title>Tony Tang | Data & SAP Automation</title>
+    <style>
+      :root {
+        --accenture-purple: #a100ff;
+        --ink: #171717;
+        --muted: #5b5b5b;
+        --line: #dedede;
+        --canvas: #f7f7f5;
+        --surface: #ffffff;
+        --lime: #beff00;
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--canvas);
+        font-family: "Aptos", "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+
+      .site-header, main, .site-footer { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+
+      .site-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 82px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .brand { font-weight: 800; font-size: 1.12rem; letter-spacing: .02em; }
+      .brand-mark { color: var(--accenture-purple); font-size: 1.55rem; vertical-align: -.08em; }
+      nav a { color: var(--ink); margin-left: 26px; font-size: .92rem; font-weight: 700; text-decoration: none; }
+      nav a:hover { color: var(--accenture-purple); }
+
+      .hero { padding: 94px 0 72px; border-bottom: 1px solid var(--line); }
+      .eyebrow, .section-label { margin: 0 0 16px; color: var(--accenture-purple); font-size: .78rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+      h1, h2, h3, p { margin-top: 0; }
+      h1 { max-width: 900px; margin-bottom: 24px; font-size: clamp(3.3rem, 8vw, 7.4rem); line-height: .93; letter-spacing: 0; }
+      h1 span { color: var(--accenture-purple); }
+      .hero-copy { max-width: 655px; margin-bottom: 32px; color: var(--muted); font-size: 1.18rem; }
+      .tags { display: flex; flex-wrap: wrap; gap: 10px; }
+      .tag { padding: 7px 12px; border: 1px solid var(--ink); background: var(--surface); font-size: .84rem; font-weight: 700; }
+
+      .tool-section { padding: 82px 0 32px; }
+      .section-heading { display: grid; grid-template-columns: 1fr minmax(260px, 420px); gap: 40px; margin-bottom: 43px; }
+      h2 { margin-bottom: 0; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1; letter-spacing: 0; }
+      .section-heading p { margin: 0; color: var(--muted); }
+
+      .tools { border-top: 2px solid var(--ink); }
+      .tool {
+        display: grid;
+        grid-template-columns: 104px minmax(0, 1.35fr) minmax(220px, .75fr);
+        gap: 26px;
+        padding: 37px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .tool-number { color: var(--accenture-purple); font-size: 1.1rem; font-weight: 800; }
+      h3 { margin-bottom: 10px; font-size: 1.7rem; line-height: 1.1; }
+      .tool p { color: var(--muted); }
+      .tool-copy p { margin-bottom: 0; }
+      .tool-output { padding-left: 20px; border-left: 3px solid var(--lime); }
+      .tool-output strong { display: block; margin-bottom: 8px; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; }
+      .tool-output span { font-size: .96rem; font-weight: 700; }
+
+      .approach { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; padding: 88px 0; }
+      .approach-copy { color: var(--muted); font-size: 1.08rem; }
+      .principles { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+      .principles li { padding: 18px 0; border-bottom: 1px solid var(--line); font-weight: 700; }
+      .principles span { display: inline-block; width: 48px; color: var(--accenture-purple); }
+
+      .closing { padding: 58px 0 65px; background: var(--ink); color: var(--surface); }
+      .closing-inner { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+      .closing h2 { max-width: 720px; font-size: clamp(2.2rem, 5vw, 4.6rem); }
+      .closing p { max-width: 610px; margin: 20px 0 0; color: #d6d6d6; font-size: 1.08rem; }
+      .closing-mark { color: var(--lime); }
+
+      .site-footer { padding: 26px 0; color: var(--muted); font-size: .86rem; }
+
+      @media (max-width: 720px) {
+        .site-header, main, .site-footer, .closing-inner { width: min(100% - 32px, 1180px); }
+        .site-header { min-height: 66px; }
+        nav { display: none; }
+        .hero { padding: 72px 0 58px; }
+        .section-heading, .approach { grid-template-columns: 1fr; gap: 22px; }
+        .tool { grid-template-columns: 58px 1fr; gap: 12px; }
+        .tool-output { grid-column: 2; }
+        .tool-section, .approach { padding-top: 60px; padding-bottom: 60px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">Tony Tang <span class="brand-mark">&gt;</span></div>
+      <nav aria-label="主导航"><a href="#tools">工具集</a><a href="#approach">工作方式</a></nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <p class="eyebrow">Data &amp; SAP Automation</p>
+        <h1 id="page-title">让数据验证与<br><span>SAP 操作</span>更直接。</h1>
+        <p class="hero-copy">面向数据迁移、质量核验和重复性业务操作，构建从数据获取、规则转换、差异验证到 SAP GUI 自动化执行的一体化工具集。</p>
+        <div class="tags" aria-label="个人标签">
+          <span class="tag">Data Scientist</span>
+          <span class="tag">Auto SAP</span>
+          <span class="tag">Data Migration</span>
+          <span class="tag">Quality Assurance</span>
+        </div>
+      </section>
+
+      <section class="tool-section" id="tools" aria-labelledby="tools-title">
+        <div class="section-heading">
+          <div><p class="section-label">01 / Toolset</p><h2 id="tools-title">四个工具<br>一条验证链路</h2></div>
+          <p>将取数、转换、核验和执行拆解为清晰而可衔接的能力模块，减少人工整理与重复操作，把时间留给问题分析与业务判断。</p>
+        </div>
+
+        <div class="tools">
+          <article class="tool">
+            <div class="tool-number">01</div>
+            <div class="tool-copy"><h3>SQL 取数</h3><p>从 ECC Oracle 或 S/4 HANA 执行标准化查询，按任务导出 CSV 数据集。无需人工登录 SAP 查数、复制和整理，即可快速准备迁移核验与质量分析所需的同口径数据。</p></div>
+            <div class="tool-output"><strong>价值交付</strong><span>快速取数与报告展示，让数据准备从人工动作变成可重复任务。</span></div>
+          </article>
+          <article class="tool">
+            <div class="tool-number">02</div>
+            <div class="tool-copy"><h3>Python 数据对比</h3><p>对比 PreLoad 与 PostLoad 的主键、记录数量和字段值差异。支持先对迁移前数据进行格式、字段取值和业务规则转换，再按等价规则核验，减少非实质性差异的干扰。</p></div>
+            <div class="tool-output"><strong>价值交付</strong><span>生成 HTML 数据验证报告，直观定位缺失、重复、错配和字段不一致。</span></div>
+          </article>
+          <article class="tool">
+            <div class="tool-number">03</div>
+            <div class="tool-copy"><h3>VBA 数据对比</h3><p>以 Excel 工作簿呈现迁移前后数据的核验结果，支持数据转换和主键配置。每项任务在模板临时副本中写入数据、执行固定宏并输出结果，保护标准模板且支持单进程或多进程运行。</p></div>
+            <div class="tool-output"><strong>价值交付</strong><span>生成可筛选的 Excel 差异明细报告，便于人工复核、沟通与验收留档。</span></div>
+          </article>
+          <article class="tool">
+            <div class="tool-number">04</div>
+            <div class="tool-copy"><h3>SAP GUI 自动化</h3><p>基于 Python、pywin32 与 SAP GUI Scripting，支持自动登录、轮询记录多个 Session 的原生 VBS 操作，并为后续回放和控件树提取保留扩展边界。</p></div>
+            <div class="tool-output"><strong>价值交付</strong><span>自动化批量执行 SAP 操作，沉淀可复用的业务流程与回归测试基础。</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="approach" id="approach" aria-labelledby="approach-title">
+        <div>
+          <p class="section-label">02 / Approach</p>
+          <h2 id="approach-title">从数据到行动，<br>每一步都有依据。</h2>
+        </div>
+        <div>
+          <p class="approach-copy">这套工具服务于主数据、配置数据和业务数据的批量核验，也适用于系统升级、迁移验收和日常回归验证。输出不是孤立的文件，而是支持数据修复、问题追踪与项目交付的可审阅结果。</p>
+          <ul class="principles">
+            <li><span>01</span>统一的数据输入与任务组织</li>
+            <li><span>02</span>可配置的转换与等价校验规则</li>
+            <li><span>03</span>面向定位和沟通的差异报告</li>
+            <li><span>04</span>可复用的 SAP 业务操作自动化</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <section class="closing" aria-label="结语">
+      <div class="closing-inner"><h2>Build data confidence.<br><span class="closing-mark">Execute with clarity.</span></h2><p>以更少的手工操作、更清晰的验证证据，支持可靠的数据迁移与 SAP 业务执行。</p></div>
+    </section>
+    <footer class="site-footer">&copy; 2026 Tony Tang. Data &amp; SAP Automation.</footer>
+  </body>
+</html>
