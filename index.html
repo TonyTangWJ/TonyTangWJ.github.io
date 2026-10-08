@@ -1,174 +1,65 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="唐文君的工具库：AI 加速技术，技术赋能业务，业务创造价值。">
-    <title>唐文君的工具库</title>
+    <title>Wenjun Tang</title>
     <style>
       :root {
         --violet: #a100ff;
         --ink: #171717;
-        --muted: #5b5b5b;
-        --line: #dedede;
-        --canvas: #f7f7f5;
         --surface: #ffffff;
-        --lime: #beff00;
       }
 
       * { box-sizing: border-box; }
 
-      html { scroll-behavior: smooth; }
-
       body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100dvh;
         margin: 0;
         color: var(--ink);
-        background: var(--canvas);
+        background: var(--surface);
         font-family: "Aptos", "Segoe UI", sans-serif;
-        line-height: 1.55;
       }
 
-      .site-header, main, .site-footer { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+      .header, .contact {
+        width: min(1180px, calc(100% - clamp(2rem, 5vw, 3rem)));
+        margin: 0 auto;
+      }
 
-      .site-header {
+      .header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        min-height: 82px;
-        border-bottom: 1px solid var(--line);
+        min-height: clamp(4.125rem, 9vw, 5.125rem);
+        border-bottom: 1px solid #dedede;
       }
 
-      .brand { font-weight: 800; font-size: 1.12rem; letter-spacing: .02em; }
-      nav a { color: var(--ink); margin-left: 26px; font-size: .92rem; font-weight: 700; text-decoration: none; }
-      nav a:hover { color: var(--violet); }
-
-      .hero { padding: 94px 0 72px; border-bottom: 1px solid var(--line); }
-      .eyebrow, .section-label { margin: 0 0 16px; color: var(--violet); font-size: .78rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
-      h1, h2, h3, p { margin-top: 0; }
-      h1 { max-width: 900px; margin-bottom: 24px; font-size: clamp(3.3rem, 8vw, 7.4rem); line-height: .93; letter-spacing: 0; }
-      h1 span { color: var(--violet); }
-      .hero-copy { max-width: 655px; margin-bottom: 32px; color: var(--muted); font-size: 1.18rem; }
-      .tags { display: flex; flex-wrap: wrap; gap: 10px; }
-      .tag { padding: 7px 12px; border: 1px solid var(--ink); background: var(--surface); font-size: .84rem; font-weight: 700; }
-
-      .tool-section { padding: 82px 0 32px; }
-      .section-heading { display: grid; grid-template-columns: 1fr minmax(260px, 420px); gap: 40px; margin-bottom: 43px; }
-      h2 { margin-bottom: 0; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1; letter-spacing: 0; }
-      .section-heading p { margin: 0; color: var(--muted); }
-
-      .tools { border-top: 2px solid var(--ink); }
-      .tool {
-        display: grid;
-        grid-template-columns: 104px minmax(0, 1.35fr) minmax(220px, .75fr);
-        gap: 26px;
-        padding: 37px 0;
-        border-bottom: 1px solid var(--line);
+      .accenture-logo {
+        color: var(--violet);
+        font-size: clamp(1.8rem, 4vw, 2.2rem);
+        font-weight: 800;
+        line-height: 1;
       }
-      .tool-number { color: var(--violet); font-size: 1.1rem; font-weight: 800; }
-      h3 { margin-bottom: 10px; font-size: 1.7rem; line-height: 1.1; }
-      .tool p { color: var(--muted); }
-      .tool-copy p { margin-bottom: 0; }
-      .tool-output { padding-left: 20px; border-left: 3px solid var(--lime); }
-      .tool-output strong { display: block; margin-bottom: 8px; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; }
-      .tool-output span { font-size: .96rem; font-weight: 700; }
 
-      .approach { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; padding: 88px 0; }
-      .approach-copy { color: var(--muted); font-size: 1.08rem; }
-      .principles { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
-      .principles li { padding: 18px 0; border-bottom: 1px solid var(--line); font-weight: 700; }
-      .principles span { display: inline-block; width: 48px; color: var(--violet); }
+      .name { font-size: clamp(.9rem, 2.2vw, 1rem); font-weight: 700; }
 
-      .closing { padding: 58px 0 65px; background: var(--ink); color: var(--surface); }
-      .closing-inner { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
-      .closing h2 { max-width: 720px; font-size: clamp(2.2rem, 5vw, 4.6rem); }
-      .closing p { max-width: 610px; margin: 20px 0 0; color: #d6d6d6; font-size: 1.08rem; }
-      .closing-mark { color: var(--lime); }
-      .contact-link { display: inline-block; margin-top: 24px; color: var(--lime); font-size: 1.05rem; font-weight: 800; text-decoration: none; }
-      .contact-link:hover { color: var(--surface); text-decoration: underline; text-underline-offset: 5px; }
-
-      .site-footer { padding: 26px 0; color: var(--muted); font-size: .86rem; }
-
-      @media (max-width: 720px) {
-        .site-header, main, .site-footer, .closing-inner { width: min(100% - 32px, 1180px); }
-        .site-header { min-height: 66px; }
-        nav { display: none; }
-        .hero { padding: 72px 0 58px; }
-        .section-heading, .approach { grid-template-columns: 1fr; gap: 22px; }
-        .tool { grid-template-columns: 58px 1fr; gap: 12px; }
-        .tool-output { grid-column: 2; }
-        .tool-section, .approach { padding-top: 60px; padding-bottom: 60px; }
+      .contact {
+        padding-top: clamp(2.5rem, 8vw, 4rem);
+        font-size: clamp(.95rem, 2.4vw, 1.05rem);
       }
+
+      .contact a { color: var(--violet); font-weight: 700; overflow-wrap: anywhere; text-decoration: none; }
+      .contact a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
     </style>
   </head>
   <body>
-    <header class="site-header">
-      <div class="brand">唐文君的工具库</div>
-      <nav aria-label="主导航"><a href="#tools">工具集</a><a href="#approach">工作方式</a></nav>
+    <header class="header">
+      <span class="accenture-logo" role="img" aria-label="Accenture logo">&gt;</span>
+      <div class="name">Wenjun Tang</div>
     </header>
-
-    <main>
-      <section class="hero" aria-labelledby="page-title">
-        <p class="eyebrow">AI-Enabled Technology</p>
-        <h1 id="page-title">AI 加速技术，<br><span>技术赋能业务。</span></h1>
-        <p class="hero-copy">以数据、自动化与智能化能力降低业务复杂度，让技术从效率工具升级为业务创新和价值创造的可靠支点。</p>
-        <div class="tags" aria-label="个人标签">
-          <span class="tag">Data Scientist</span>
-          <span class="tag">Auto SAP</span>
-          <span class="tag">AI for Business</span>
-          <span class="tag">Digital Transformation</span>
-        </div>
-      </section>
-
-      <section class="tool-section" id="tools" aria-labelledby="tools-title">
-        <div class="section-heading">
-          <div><p class="section-label">01 / Toolset</p><h2 id="tools-title">四个工具<br>连接技术与业务</h2></div>
-          <p>从数据连接、规则处理到自动化执行，将具体技术能力组织为可复用模块，减少人工整理与重复操作，把时间留给问题分析、业务判断与价值创造。</p>
-        </div>
-
-        <div class="tools">
-          <article class="tool">
-            <div class="tool-number">01</div>
-            <div class="tool-copy"><h3>SQL 取数</h3><p>从 ECC Oracle 或 S/4 HANA 执行标准化查询，按任务导出 CSV 数据集。无需人工登录 SAP 查数、复制和整理，即可快速准备迁移核验与质量分析所需的同口径数据。</p></div>
-            <div class="tool-output"><strong>价值交付</strong><span>快速取数与报告展示，让数据准备从人工动作变成可重复任务。</span></div>
-          </article>
-          <article class="tool">
-            <div class="tool-number">02</div>
-            <div class="tool-copy"><h3>Python 数据对比</h3><p>对比 PreLoad 与 PostLoad 的主键、记录数量和字段值差异。支持先对迁移前数据进行格式、字段取值和业务规则转换，再按等价规则核验，减少非实质性差异的干扰。</p></div>
-            <div class="tool-output"><strong>价值交付</strong><span>生成 HTML 数据验证报告，直观定位缺失、重复、错配和字段不一致。</span></div>
-          </article>
-          <article class="tool">
-            <div class="tool-number">03</div>
-            <div class="tool-copy"><h3>VBA 数据对比</h3><p>以 Excel 工作簿呈现迁移前后数据的核验结果，支持数据转换和主键配置。每项任务在模板临时副本中写入数据、执行固定宏并输出结果，保护标准模板且支持单进程或多进程运行。</p></div>
-            <div class="tool-output"><strong>价值交付</strong><span>生成可筛选的 Excel 差异明细报告，便于人工复核、沟通与验收留档。</span></div>
-          </article>
-          <article class="tool">
-            <div class="tool-number">04</div>
-            <div class="tool-copy"><h3>SAP GUI 自动化</h3><p>基于 Python、pywin32 与 SAP GUI Scripting，支持自动登录、轮询记录多个 Session 的原生 VBS 操作，并为后续回放和控件树提取保留扩展边界。</p></div>
-            <div class="tool-output"><strong>价值交付</strong><span>自动化批量执行 SAP 操作，沉淀可复用的业务流程与回归测试基础。</span></div>
-          </article>
-        </div>
-      </section>
-
-      <section class="approach" id="approach" aria-labelledby="approach-title">
-        <div>
-          <p class="section-label">02 / Approach</p>
-          <h2 id="approach-title">用技术加速，<br>让业务创造价值。</h2>
-        </div>
-        <div>
-          <p class="approach-copy">工具库聚焦于把复杂、重复且需要精确性的工作转化为稳定流程。当前能力覆盖数据迁移、系统升级、质量核验和业务执行，并持续探索 AI 在业务洞察、智能决策与流程优化中的实际应用。</p>
-          <ul class="principles">
-            <li><span>01</span>以 AI 与自动化加速重复工作</li>
-            <li><span>02</span>以数据与规则支撑可靠决策</li>
-            <li><span>03</span>以清晰报告缩短问题定位路径</li>
-            <li><span>04</span>以可复用能力持续赋能业务</li>
-          </ul>
-        </div>
-      </section>
-    </main>
-
-    <section class="closing" aria-label="结语">
-      <div class="closing-inner"><h2>AI 加速技术。<br><span class="closing-mark">业务创造价值。</span></h2><p>将可靠的技术能力沉淀为可持续的业务动能。</p><a class="contact-link" href="mailto:wenjun.a.tang@accenture.cn" data-encryption="planned">wenjun.a.tang@accenture.cn</a></div>
-    </section>
-    <footer class="site-footer">&copy; 2026 唐文君的工具库.</footer>
+    <main class="contact">Contact me: <a href="mailto:wenjun.a.tang@accenture.cn" data-encryption="planned">wenjun.a.tang@accenture.cn</a></main>
   </body>
 </html>
