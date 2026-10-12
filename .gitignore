@@ -1,4 +1,5 @@
 *.json
 *.py
+__pycache__/
 /.config
-/.Code Encrypter
+/Code Encrypter/
