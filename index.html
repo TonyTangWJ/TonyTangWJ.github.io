@@ -97,16 +97,17 @@
 
           const authenticator = jsyaml.load(await response.text());
           const users = authenticator?.USER;
-          if (!Array.isArray(users) || users.length === 0 || users.some(({ Name, DeviceHash, Signature }) => typeof Name !== "string" || typeof DeviceHash !== "string" || typeof Signature !== "string")) {
+          if (!Array.isArray(users) || users.length === 0 || users.some(({ Name, DeviceHash, Signature, License }) => typeof Name !== "string" || typeof DeviceHash !== "string" || typeof Signature !== "string" || typeof License !== "string")) {
             throw new Error("Invalid authenticator.yml format");
           }
 
           const authorizations = document.querySelector("#authorizations");
-          authorizations.replaceChildren(...users.map(({ Name, DeviceHash, Signature }) => {
+          authorizations.replaceChildren(...users.map(({ Name, DeviceHash, Signature, License }) => {
             const authorization = document.createElement("div");
             authorization.className = "authorization";
             authorization.dataset.name = Name;
             authorization.dataset.signature = Signature;
+            authorization.dataset.license = License;
             authorization.textContent = `DeviceHash: ${DeviceHash}`;
             return authorization;
           }));
