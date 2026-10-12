@@ -1,4 +1,5 @@
 *.json
-*.py
 __pycache__/
-*/
+/Tools/
+/Output/
+/Logs/
