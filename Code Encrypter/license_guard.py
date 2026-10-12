@@ -193,11 +193,17 @@ def validate_or_exit(settings_path: str | Path | None = None) -> None:
     settings = json.loads(settings_file.read_text(encoding="utf-8"))
     contact = DEFAULT_OWNER_EMAIL
     try:
+        cache_exists = CACHE_PATH.is_file()
+        if cache_exists:
+            show_progress("Authorization cache found. Validating it for this device.")
+        else:
+            show_progress("Authorization cache was not found. Online verification is required.")
         device_code = get_device_code()
-        if cache_is_valid(settings["public_key_pem"], device_code):
+        if cache_exists and cache_is_valid(settings["public_key_pem"], device_code):
             show_progress("Authorization cache is valid. Starting the application.")
             return
-        show_progress("Authorization cache is unavailable or expired. Online verification is required.")
+        if cache_exists:
+            show_progress("Authorization cache is invalid or expired. Online verification is required.")
         valid, message, contact = verify_license(settings["public_key_pem"], settings["page_url"], device_code)
     except RuntimeError as error:
         valid, message = False, f"Cannot read this device UUID: {error}"
@@ -217,3 +223,5 @@ def validate_or_exit(settings_path: str | Path | None = None) -> None:
         except EOFError:
             pass
         raise SystemExit(1)
+
+

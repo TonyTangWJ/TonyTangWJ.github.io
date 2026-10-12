@@ -225,6 +225,7 @@ def package_application(source: Path, output: Path, license_data: dict[str, str]
     application_output = output / source.parent.name
     application_output.mkdir(parents=True, exist_ok=True)
     (application_output / "main.exe").unlink(missing_ok=True)
+    shutil.rmtree(application_output / "_internal", ignore_errors=True)
     build_directory = application_output / ".build"
     shutil.rmtree(build_directory, ignore_errors=True)
     build_directory.mkdir()
@@ -268,7 +269,7 @@ def package_application(source: Path, output: Path, license_data: dict[str, str]
     dependency_data = [argument for dependency in third_party_dependencies(source, output) for argument in ("--collect-all", dependency)]
     try:
         run_command([
-            sys.executable, "-m", "PyInstaller", "--noconfirm", "--clean", "--onefile", "--name", "main",
+            sys.executable, "-m", "PyInstaller", "--noconfirm", "--clean", "--onedir", "--name", "main",
             "--distpath", str(application_output), "--workpath", str(build_directory / "work"),
             "--specpath", str(build_directory), "--paths", str(ROOT), "--icon", str(ICON_PATH), "--version-file", str(version_file),
             *dependency_data, *python_data, "--add-data", f"{runtime_settings_path}{data_separator}.", str(launcher),
