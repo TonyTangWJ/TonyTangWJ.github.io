@@ -83,7 +83,7 @@ def cache_is_valid(public_key_pem: str, device_code: str) -> bool:
 
 def write_authorization_cache(public_key_pem: str, device_code: str, expires_on: str) -> None:
     license_until = datetime.combine(date.fromisoformat(expires_on) + timedelta(days=1), time.min, timezone.utc)
-    cache_until = min(datetime.now(timezone.utc) + timedelta(days=5), license_until)
+    cache_until = min(datetime.now(timezone.utc) + timedelta(days=30), license_until)
     payload = {
         "device_hash": device_hash(device_code),
         "public_key_fingerprint": public_key_fingerprint(public_key_pem),
