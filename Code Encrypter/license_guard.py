@@ -158,9 +158,11 @@ def verify_license(
     contact = footer_email
 
     try:
-        show_progress("3/4 Finding the authorization record for this device...")
-        matching_user = next((user for user in users if user.get("deviceHash") == device_hash(device_code)), None)
         if matching_user is None:
+            return True, "Authorization verified.", contact
+        show_progress("3/4 Finding the authorization record for this device...")
+        matching_user = next((user for user in users if user.get("deviceHash") == device_hash(device_code)), 'Error')
+        if matching_user == 'Error':
             return False, "Authorization record is unavailable.", contact
         payload = json.loads(base64.b64decode(matching_user["license"]).decode("utf-8"))
         signature = base64.b64decode(matching_user["signature"])
@@ -193,6 +195,9 @@ def validate_or_exit(settings_path: str | Path | None = None) -> None:
     settings = json.loads(settings_file.read_text(encoding="utf-8"))
     contact = DEFAULT_OWNER_EMAIL
     try:
+        # 新增逻辑：如果 page_url 为空，则不进行在线校验，直接启动
+        if not settings.get("page_url", "").strip():
+            return 
         cache_exists = CACHE_PATH.is_file()
         if cache_exists:
             show_progress("Authorization cache found. Validating it for this device.")

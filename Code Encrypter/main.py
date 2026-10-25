@@ -89,12 +89,16 @@ def ensure_key_pair(key_directory: Path, user_name: str) -> tuple[Path, Path]:
 
 
 def issue_license(user_name: str, device_code: str, expires_on: str, owner_email: str, key_directory: Path) -> dict[str, str]:
-    if not device_code.strip():
-        raise ValueError("Device code is required.")
+    # if not device_code.strip():
+    #     raise ValueError("Device code is required.")
     date.fromisoformat(expires_on)
     private_path, public_path = ensure_key_pair(key_directory, user_name)
+
+    # 如果 device_code 为空，则 device_hash 也为空
+    device_hash = hash_device_code(device_code) if device_code.strip() else ""
+    
     payload = {
-        "device_hash": hash_device_code(device_code),
+        "device_hash": device_hash,
         "expires_on": expires_on,
         "owner_email": owner_email.strip().lower(),
     }
@@ -230,7 +234,8 @@ def package_application(source: Path, output: Path, license_data: dict[str, str]
     shutil.rmtree(build_directory, ignore_errors=True)
     build_directory.mkdir()
     runtime_settings = {
-        "public_key_pem": license_data["public_key_pem"], "page_url": settings["page_url"],
+        "public_key_pem": license_data["public_key_pem"], 
+        "page_url": settings["page_url"] if settings["page_url"].strip() else "", 
     }
     runtime_settings_path = build_directory / "runtime-settings.json"
     runtime_settings_path.write_text(json.dumps(runtime_settings, indent=2), encoding="utf-8")
@@ -290,6 +295,7 @@ class EncrypterApp:
             "owner": StringVar(value=DEFAULT_OWNER_EMAIL), "source": StringVar(),
             "output": StringVar(value="Output"),
             "page": StringVar(value="https://tonytangwj.github.io/"),
+            "update_yml": StringVar(value="1"),
         }
         frame = ttk.Frame(root, padding=16)
         frame.grid(sticky="nsew")
@@ -318,7 +324,8 @@ class EncrypterApp:
         try:
             settings = {name: variable.get().strip() for name, variable in self.values.items()}
             license_data = issue_license(settings["user"], settings["device"], settings["expires"], settings["owner"], KEY_DIRECTORY)
-            write_authenticator(ROOT.parent / "authenticator.yml", settings["user"], license_data)
+            if settings["page"]:
+                write_authenticator(ROOT.parent / "authenticator.yml", settings["user"], license_data)
             runtime = {"page_url": settings["page"]}
             package_application(
                 project_path(settings["source"], "Python entry file"),
